@@ -7,6 +7,7 @@
 */
 
 #define FUSE_USE_VERSION 26
+#define FILE_OFFSET_BITS 64
 
 #include <fuse.h>
 

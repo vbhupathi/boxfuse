@@ -9,7 +9,7 @@
 /* For pread()/pwrite() */
 #define _XOPEN_SOURCE 500
 #endif
-
+#define FILE_OFFSET_BITS 64
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -199,23 +199,23 @@ static int box_chown(const char * path, uid_t owner, gid_t group)
  * converting parameters and/or performing local I/O.
  */
 static struct fuse_operations box_oper = {
-    .getattr	= api_getattr,
-    .access	= box_access,
-    .readdir	= box_readdir,
-    .mkdir	= box_mkdir,
-    .unlink	= api_removefile,
-    .rmdir	= api_removedir,
-    .release	= box_release,
-    .rename	= api_rename_v2,
-    .truncate	= box_truncate,
-    .utimens	= box_utimens,
-    .open	= box_open,
-    .create	= box_create,
-    .read	= box_read,
-    .write	= box_write,
-    .statfs	= box_statfs,
-    .chmod	= box_chmod,
-    .chown	= box_chown
+    getattr	: api_getattr,
+    access	: box_access,
+    readdir	: box_readdir,
+    mkdir	: box_mkdir,
+    unlink	: api_removefile,
+    rmdir	: api_removedir,
+    release	: box_release,
+    rename	:api_rename_v2,
+    truncate	: box_truncate,
+    utimens	: box_utimens,
+    open	: box_open,
+    create	: box_create,
+    read	: box_read,
+    write	: box_write,
+    statfs	: box_statfs,
+    chmod	: box_chmod,
+    chown	: box_chown
 };
 
 
