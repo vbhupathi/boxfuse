@@ -1,7 +1,7 @@
 
 # Variables
 PKGS = fuse libxml-2.0 libcurl
-FLAGS ?= $(shell pkg-config ${PKGS} --cflags)
+FLAGS ?= $(shell pkg-config ${PKGS} --cflags) -D_FILE_OFFSET_BITS=64
 LIBS ?= $(shell pkg-config ${PKGS} --libs) -lpthread
 OBJS = boxfs.o boxapi.o boxpath.o boxhttp.o boxopts.o boxjson.o boxcache.o boxutils.o
 PREFIX ?= /usr/local
