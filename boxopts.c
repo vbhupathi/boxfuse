@@ -100,6 +100,7 @@ void show_help()
             "  -G --gid                    group id to use for group permissions\n"
             "  -F --fperm                  file permissions (default 0644)\n"
             "  -D --dperm                  directory permissions (default 0755)\n\n"
+            "  -o --fuse_options           specify FUSE mount options\n\n"
             "Configuration file example:\n"
             "mountpoint = /path/to/folder\n"
             "verbose    = no\n"
@@ -110,7 +111,8 @@ void show_help()
             "uid = 1000\n"
             "gid = 100\n"
             "fperm = 644\n"
-            "dperm = 755\n\n");
+            "dperm = 755\n\n"
+            "fuse_options = allow_other, default_permissions\n\n");
             
             exit(0);
 }
@@ -132,6 +134,7 @@ int parse_options (int* argc, char*** argv, box_options * options)
                 {'G', "gid", OPT_INT, &options->gid},
                 {'F', "fperm", OPT_INT, &options->fperm},
                 {'D', "dperm", OPT_INT, &options->dperm},
+                {'o', "fuse-options",OPT_STRING,&options->fuse_options},
                 {'h', NULL, OPT_CALLBACK, &show_help},
 		{0, "mountpoint", OPT_STRING, &options->mountpoint}
 	};
@@ -190,7 +193,22 @@ int parse_options (int* argc, char*** argv, box_options * options)
 				*argc-=1;
 			}
 		}
+        /*prefix the options with -o, such as "allow_other" to "-oallow_other"
+        since that is how 'fuse_opt_add_arg' works in libfuse
+        allow_other overrides the security measure restricting file access to the filesystem owner, 
+        so all users including root can access the files */
+        if(options->fuse_options)
+        {
+            char *fuse_option_prefix = "-o";
+            size_t fuse_options_length = strlen(fuse_option_prefix) + strlen(options->fuse_options) +1;
+            char *tmp_fuse_options = (char *) malloc(fuse_options_length);
+            strcpy(tmp_fuse_options, fuse_option_prefix);
+            strcpy(tmp_fuse_options, options->fuse_options);
+            options->fuse_options = tmp_fuse_options;
+
+        }
 		args[1] = options->mountpoint;
+        args[2] = options->fuse_options;
 
 		/* check for fuse options and build the new argv for fuse main */
 		if(*argc) {
@@ -199,6 +217,7 @@ int parse_options (int* argc, char*** argv, box_options * options)
 		        
 			fargs[0] = args[0]; // "boxfs"
 			fargs[1] = args[1]; // mountpoint
+            fargs[2] = args[2]; //fuse_options
 
 		        for(i = 1; i < *argc; ++i) fargs[i+1] = (*argv)[i];
 

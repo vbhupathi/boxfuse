@@ -105,7 +105,7 @@ void save_tokens(const char * token_file)
 char * token_expire_time()
 {
         char * res = malloc(13);
-        time_t t = time(NULL)+30*DAY_SECS;
+        time_t t = time(NULL)+60*DAY_SECS;
         snprintf(res, 12, "%lu", t);
         return res;
 }
