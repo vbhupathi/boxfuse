@@ -99,7 +99,7 @@ void show_help()
             "  -U --uid                    user id to use as file owner (defaults to you)\n"
             "  -G --gid                    group id to use for group permissions\n"
             "  -F --fperm                  file permissions (default 0644)\n"
-            "  -D --dperm                  directory permissions (default 0755)\n\n"
+            "  -D --dperm                  directory permissions (default 0755)\n"
             "  -o --fuse_options           specify FUSE mount options\n\n"
             "Configuration file example:\n"
             "mountpoint = /path/to/folder\n"
@@ -111,7 +111,7 @@ void show_help()
             "uid = 1000\n"
             "gid = 100\n"
             "fperm = 644\n"
-            "dperm = 755\n\n"
+            "dperm = 755\n"
             "fuse_options = allow_other, default_permissions\n\n");
             
             exit(0);
@@ -194,7 +194,7 @@ int parse_options (int* argc, char*** argv, box_options * options)
 			}
 		}
         /*prefix the options with -o, such as "allow_other" to "-oallow_other"
-        since that is how 'fuse_opt_add_arg' works in libfuse
+        since that is how 'fuse_opt_add_arg' works in libfuse 
         allow_other overrides the security measure restricting file access to the filesystem owner, 
         so all users including root can access the files */
         if(options->fuse_options)

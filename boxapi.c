@@ -36,8 +36,8 @@
 */
 // -- v2 --
 //    AUTH
-#define API_KEY_VAL "f9ss11y2w0hg5r04jsidxlhk4pil28cf"
-#define API_SECRET  "r3ZHAIhsOL2FoHjgERI9xf74W5skIM0w"
+#define API_KEY_VAL "rkz805ctx7xhs5a9kaag8z5lmnzu1d72"
+#define API_SECRET  "PViOcWDZq4eDtFrXH3mhkSJa4yBI2ANT"
 #define API_OAUTH_URL "https://app.box.com/api/oauth2/" //"https://www.box.com/api/oauth2/"
 #define API_OAUTH_AUTHORIZE API_OAUTH_URL "authorize?response_type=code&client_id=" API_KEY_VAL /*"&redirect_uri=http%3A//localhost"*/
 #define API_OAUTH_TOKEN     API_OAUTH_URL "token"
@@ -818,7 +818,7 @@ void start_helper_threads()
 }
 
 /*
- * Login to box.net, get the auth_token
+ * Login to box.com, get the auth_token
  */
 int api_init(int* argc, char*** argv) {
 
